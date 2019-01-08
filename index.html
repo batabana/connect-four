@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head>
+        <meta charset="utf-8">
+        <title>Connect Four</title>
+        <link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet">
+        <link rel="stylesheet" href="styles.css">
+    </head>
+    <body>
+        <header><span>Play Connect Four</span></header>
+        <div class="start-box">
+            <div>
+                <span>Player 1:</span>
+                <input type="text" name="" value="Player 1">
+            </div>
+            <div>
+                <span>Player 2:</span>
+                <input type="text" name="" value="Player 2">
+            </div>
+            <button type="button" name="button">Let's play!</button>
+        </div>
+        <div class="play-screen hide">
+            <button type="button" id=game-button>Reset Game</button>
+            <div class="player current">
+                <span>Player 1:</span>
+                <div class="jeton" id="jeton1"></div>
+            </div>
+            <div class="board"></div>
+            <div class="player">
+                <span>Player 2:</span>
+                <div class="jeton" id="jeton2"></div>
+            </div>
+            <button type="button" id="name-button">Reset Board</button>
+            <div class="overlay hide">
+                <div class="overlay-assets">
+                    <img src="assets/crown.png" alt="">
+                    <span></span>
+                    <button type="button" id="three-button">Try also:<br>Connect Three</button>
+                </div>
+            </div>
+        </div>
+        <footer></footer>
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+        <script src="script.js" charset="utf-8"></script>
+    </body>
+</html>

@@ -1,0 +1,224 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    text-align: center;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #fcd3be;
+    font-family: Arial, sans-serif;
+    color: #44424f;
+}
+
+header {
+    text-align: center;
+    background-color: #481f2b;
+    height: 80px;
+    width: 100%;
+    font-family: "Lobster", cursive;
+    color: white;
+    font-size: 36px;
+    z-index: 10;
+}
+
+footer {
+    background-color: #481f2b;
+    height: 10px;
+    width: 100%;
+    z-index: 10;
+}
+
+header span {
+    display: inline-block;
+    margin-top: 20px;
+}
+
+.start-box {
+    width: 500px;
+    height: 200px;
+    border: 10px solid #6d5941;
+    border-radius: 10px;
+    font-size: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    box-shadow: 5px 5px #888888;
+}
+
+button,
+input {
+    font-size: inherit;
+    font-family: inherit;
+    color: inherit;
+    z-index: 10;
+}
+
+.play-screen.show {
+    display: flex;
+    /* justify-content: space-around; */
+    align-items: center;
+}
+
+.hide {
+    display: none;
+}
+
+.board {
+    display: inline-flex;
+    border: 2px solid #481f2b;
+    box-shadow: 5px 5px #888888;
+}
+
+.column {
+    display: flex;
+    flex-direction: column-reverse;
+}
+
+.slot {
+    width: 120px;
+    height: 120px;
+    background-color: #9abd95;
+    border: 1px solid #819650;
+}
+
+.hole,
+.jeton {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+}
+
+.hole.three {
+    width: 120px;
+    height: 120px;
+}
+
+.slot.three {
+    width: 140px;
+    height: 140px;
+}
+
+.hole {
+    margin: 10px;
+    background-color: white;
+}
+
+.slot.player1 .hole,
+#jeton1 {
+    background-color: #06524d;
+}
+
+.slot.player2 .hole,
+#jeton2 {
+    background-color: #423d5b;
+}
+
+.slot.player1preview .hole {
+    background-color: rgba(6, 82, 77, 0.5);
+}
+
+.slot.player2preview .hole {
+    background-color: rgba(66, 61, 91, 0.5);
+}
+
+.slot.win {
+    background-color: #c45852;
+}
+
+.player,
+.jeton {
+    display: inline-block;
+    vertical-align: middle;
+    font-family: "Lobster", cursive;
+    font-size: 28px;
+    padding: 20px;
+    margin: 10px;
+}
+
+.player.current {
+    background-color: #fefaf1;
+}
+
+button:hover {
+    cursor: pointer;
+}
+
+button:focus {
+    outline: 1px dotted grey;
+}
+
+.play-screen button {
+    width: 130px;
+    margin: 10px;
+    align-self: flex-end;
+    font-size: 20px;
+}
+
+#three-button {
+    margin-top: 30px;
+    width: 200px;
+}
+
+.overlay {
+    position: fixed;
+    left: 0;
+    width: 100%;
+    background-color: rgba(68, 66, 67, 0.7);
+    /* one centered block */
+    /* top: 50%;
+    height: 400px;
+    margin-top: -200px; */
+    /* everything covered */
+    top: 0;
+    height: 100%;
+}
+
+.overlay-assets {
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.overlay img {
+    /* margin-top: 200px; */
+    width: 500px;
+}
+
+.overlay span {
+    display: block;
+    font-family: "Lobster", cursive;
+    font-size: 40px;
+    color: white;
+}
+
+@media only screen and (max-width: 1500px) {
+    .hole,
+    .jeton {
+        width: 60px;
+        height: 60px;
+    }
+
+    .slot {
+        width: 80px;
+        height: 80px;
+    }
+
+    .hole.three {
+        width: 80px;
+        height: 80px;
+    }
+
+    .slot.three {
+        width: 100px;
+        height: 100px;
+    }
+    .overlay img {
+        /* margin-top: 150px; */
+        width: 400px;
+    }
+}
