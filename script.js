@@ -145,19 +145,8 @@
                 slots.eq(i + checkStr.indexOf(searchStr)).addClass("win");
             }
 
-            // hacking the blink on winning slots in ^^'
-            setTimeout(function() {
-                $(".slot.win").css("backgroundColor", "#9abd95");
-            }, 50);
-            setTimeout(function() {
-                $(".slot.win").css("backgroundColor", "#c45852");
-            }, 100);
-            setTimeout(function() {
-                $(".slot.win").css("backgroundColor", "#9abd95");
-            }, 150);
-            setTimeout(function() {
-                $(".slot.win").css("backgroundColor", "#c45852");
-            }, 200);
+            // blink on winning slots
+            doubleBlink("#9abd95", "#c45852", ".slot.win", 50, 50);
 
             // fill board with winning color
             function fillBoard(idx) {
@@ -168,41 +157,15 @@
             }
             fillBoard(colNum * rowNum);
 
-            // yet another hacky blink on the whole board ¯\_(ツ)_/¯
+            // blink on board + victory message in overlay
             if (winNum == 4) {
-                setTimeout(function() {
-                    $(".hole").css("backgroundColor", "white");
-                }, 2200);
-                setTimeout(function() {
-                    $(".hole").css("backgroundColor", currColor);
-                }, 2300);
-                setTimeout(function() {
-                    $(".hole").css("backgroundColor", "white");
-                }, 2400);
-                setTimeout(function() {
-                    $(".hole").css("backgroundColor", currColor);
-                }, 2500);
-
-                // show victory message in overlay
+                doubleBlink("white", currColor, ".hole", 2200, 100);
                 setTimeout(function() {
                     $(".overlay").removeClass("hide");
                     $(".overlay").find("span").html("Congrats " + currName + "!");
                 }, 3000);
             } else if (winNum == 3) {
-                setTimeout(function() {
-                    $(".hole").css("backgroundColor", "white");
-                }, 500);
-                setTimeout(function() {
-                    $(".hole").css("backgroundColor", currColor);
-                }, 600);
-                setTimeout(function() {
-                    $(".hole").css("backgroundColor", "white");
-                }, 700);
-                setTimeout(function() {
-                    $(".hole").css("backgroundColor", currColor);
-                }, 800);
-
-                // show victory message in overlay
+                doubleBlink("white", currColor, ".hole", 500, 100);
                 setTimeout(function() {
                     $(".overlay").removeClass("hide");
                     $(".overlay").find("span").html("Congrats " + currName + "!");
@@ -246,5 +209,20 @@
 
     function deletePreview(e) {
         $(e.currentTarget).find(".slot").removeClass(currPlayer + "preview");
+    }
+
+    function doubleBlink(color1, color2, cssSelektor, start, pause) {
+        setTimeout(function() {
+            $(cssSelektor).css("backgroundColor", color1);
+        }, start);
+        setTimeout(function() {
+            $(cssSelektor).css("backgroundColor", color2);
+        }, start + pause);
+        setTimeout(function() {
+            $(cssSelektor).css("backgroundColor", color1);
+        }, start + pause * 2);
+        setTimeout(function() {
+            $(cssSelektor).css("backgroundColor", color2);
+        }, start + pause * 3);
     }
 })();
