@@ -1,36 +1,45 @@
 (function() {
+    var $input = $("input");
+    var $overlay = $(".overlay");
+    var $startBox = $(".start-box");
+    var $playScreen = $(".play-screen");
+    var $player = $(".player");
+
     var currPlayer = "player1";
     var currColor = "#06524d";
-    var currName = $("input").eq(0).val();
+    var currName = $input.eq(0).val();
+
     // standard setup of board
     var rowNum = 6;
     var colNum = 7;
     var winNum = 4;
 
+    var $board = $(".board");
+
     // clear input-field
-    $("input").on("click", function(e) {
+    $input.on("click", function(e) {
         if ($(e.target).val() == "Player 1" || $(e.target).val() == "Player 2") {
             $(e.target).val("");
         }
     });
 
     // hide startbox, set players' names, build board
-    $(".start-box").find("button").on("click", buildBoard);
+    $startBox.find("button").on("click", buildBoard);
 
     function buildBoard() {
         // hide startbox + overlay, show play-screen
-        $(".start-box").hide();
-        $(".overlay").addClass("hide");
-        $(".play-screen").removeClass("hide").addClass("show");
+        $startBox.hide();
+        $overlay.addClass("hide");
+        $playScreen.removeClass("hide").addClass("show");
 
         // set players' names
-        $(".player").eq(0).find("span").html($("input").eq(0).val());
-        $(".player").eq(1).find("span").html($("input").eq(1).val());
+        $player.eq(0).find("span").html($input.eq(0).val());
+        $player.eq(1).find("span").html($input.eq(1).val());
 
         // set current player to player 1
         currPlayer = "player1";
-        $(".player").eq(1).removeClass("current");
-        $(".player").eq(0).addClass("current");
+        $player.eq(1).removeClass("current");
+        $player.eq(0).addClass("current");
 
         // build board in html
         var html = "";
@@ -41,7 +50,7 @@
             }
             html += "</div>";
         }
-        $(".board").html(html);
+        $board.html(html);
 
         if (winNum == 3) {
             $(".hole").addClass("three");
@@ -49,15 +58,15 @@
         }
 
         // add events
-        $(".board").off("click", ".column", processClick);
-        $(".board").on("click", ".column", processClick);
-        $(".board").on("mouseenter", ".column", previewNextMove);
-        $(".board").on("mouseleave", ".column", deletePreview);
-        $(".play-screen").on("click", "#name-button", function() {
+        $board.off("click", ".column", processClick);
+        $board.on("click", ".column", processClick);
+        $board.on("mouseenter", ".column", previewNextMove);
+        $board.on("mouseleave", ".column", deletePreview);
+        $playScreen.on("click", "#name-button", function() {
             location.reload();
         });
-        $(".play-screen").on("click", "#game-button", buildBoard);
-        $(".play-screen").on("click", "#three-button", function() {
+        $playScreen.on("click", "#game-button", buildBoard);
+        $playScreen.on("click", "#three-button", function() {
             rowNum = 3;
             colNum = 3;
             winNum = 3;
@@ -67,6 +76,7 @@
 
     function processClick(e) {
         // find slot at the bottom and color it
+        var $slot = $(".slot");
         var currCol = $(e.currentTarget);
         var currSlots = currCol.find(".slot");
         currSlots.removeClass(currPlayer + "preview");
@@ -78,13 +88,11 @@
                 // check for victory: columns, rows, diagonals
                 if (checkVictory(currSlots)) {
                     victoryProcessing();
-                } else if (
-                    checkVictory($(".slot:nth-child(" + (i + 1) + ")"))
-                ) {
+                } else if (checkVictory($(".slot:nth-child(" + (i + 1) + ")"))) {
                     victoryProcessing();
                 } else {
                     for (var b = 0; b < colNum * rowNum; b++) {
-                        var currSlot = $(".slot").eq(b);
+                        var currSlot = $slot.eq(b);
                         // initialize objects for going up and down with current slot
                         var slotsDown = currSlot;
                         var slotsUp = currSlot;
@@ -93,11 +101,11 @@
                         // adding slots to each object in steps of 2/5 (down) and 4/7 (up)
                         for (var c = 1; c < winNum; c++) {
                             if (winNum == 4) {
-                                nextDownSlot = $(".slot").eq(b + 5 * c);
-                                nextUpSlot = $(".slot").eq(b + 7 * c);
+                                nextDownSlot = $slot.eq(b + 5 * c);
+                                nextUpSlot = $slot.eq(b + 7 * c);
                             } else if (winNum == 3) {
-                                nextDownSlot = $(".slot").eq(b + 2 * c);
-                                nextUpSlot = $(".slot").eq(b + 4 * c);
+                                nextDownSlot = $slot.eq(b + 2 * c);
+                                nextUpSlot = $slot.eq(b + 4 * c);
                             }
 
                             // check if the next slot is in the neighbouring column
@@ -109,11 +117,9 @@
                             }
                         }
                         if (checkVictory(slotsDown)) {
-                            victoryProcessing();
-                            return;
+                            return victoryProcessing();
                         } else if (checkVictory(slotsUp)) {
-                            victoryProcessing();
-                            return;
+                            return victoryProcessing();
                         }
                     }
                     switchPlayers();
@@ -161,14 +167,14 @@
             if (winNum == 4) {
                 doubleBlink("white", currColor, ".hole", 2200, 100);
                 setTimeout(function() {
-                    $(".overlay").removeClass("hide");
-                    $(".overlay").find("span").html("Congrats " + currName + "!");
+                    $overlay.removeClass("hide");
+                    $overlay.find("span").html("Congrats " + currName + "!");
                 }, 3000);
             } else if (winNum == 3) {
                 doubleBlink("white", currColor, ".hole", 500, 100);
                 setTimeout(function() {
-                    $(".overlay").removeClass("hide");
-                    $(".overlay").find("span").html("Congrats " + currName + "!");
+                    $overlay.removeClass("hide");
+                    $overlay.find("span").html("Congrats " + currName + "!");
                 }, 1300);
             }
 
@@ -180,19 +186,19 @@
         if (currPlayer == "player1") {
             currPlayer = "player2";
             currColor = "#423d5b";
-            currName = $("input").eq(1).val();
+            currName = $input.eq(1).val();
         } else {
             currPlayer = "player1";
             currColor = "#06524d";
-            currName = $("input").eq(0).val();
+            currName = $input.eq(0).val();
         }
-        $(".player").eq(1).toggleClass("current");
-        $(".player").eq(0).toggleClass("current");
+        $player.eq(1).toggleClass("current");
+        $player.eq(0).toggleClass("current");
     }
 
     function victoryProcessing() {
-        $(".board").off("click", ".column", processClick);
-        $(".board").off("mouseenter", ".column", previewNextMove);
+        $board.off("click", ".column", processClick);
+        $board.off("mouseenter", ".column", previewNextMove);
         return;
     }
 
@@ -212,17 +218,18 @@
     }
 
     function doubleBlink(color1, color2, cssSelektor, start, pause) {
+        var $cssSelektor = $(cssSelektor);
         setTimeout(function() {
-            $(cssSelektor).css("backgroundColor", color1);
+            $cssSelektor.css("backgroundColor", color1);
         }, start);
         setTimeout(function() {
-            $(cssSelektor).css("backgroundColor", color2);
+            $cssSelektor.css("backgroundColor", color2);
         }, start + pause);
         setTimeout(function() {
-            $(cssSelektor).css("backgroundColor", color1);
+            $cssSelektor.css("backgroundColor", color1);
         }, start + pause * 2);
         setTimeout(function() {
-            $(cssSelektor).css("backgroundColor", color2);
+            $cssSelektor.css("backgroundColor", color2);
         }, start + pause * 3);
     }
 })();
